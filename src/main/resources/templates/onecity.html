@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head lang="cs">
+    <meta charset="UTF-8"/>
+    <title>Weather Api - Spring</title>
+    <link rel="stylesheet" href="/main.css" />
+</head>
+<body>
+<h1 th:text="'Weather in ' + ${About0neCity.getLocation()}"> </h1>
+<main>
+    <article>
+        <section>
+            <div class="temperature">
+                <div class="temp"><h2 th:text="${About0neCity.getTemp_celsius()}"></h2><span>°C</span></div>
+                <label>Temperature</label>
+            </div>
+            <div class="parameters">
+                <p th:text="'Humadity: ' + ${About0neCity.getRel_humadity()} + '%'"></p>
+                <p th:text="'Wind direction: ' + ${About0neCity.getWind_direction()}"></p>
+                <p th:text="'Wind speed: ' + ${About0neCity.getWindSpeed_mps()} + ' km/h'"></p>
+            </div>
+            <div class="timestamp">
+                <p th:text="${About0neCity.getTimestamp()}"></p>
+                <p th:text="${About0neCity.getWeather_description()}"></p>
+            </div>
+        </section>
+        <img th:src="'/Images/'+ ${#strings.toLowerCase(About0neCity.getLocation())} + '.png'" />
+        <a class="back" href="/">Back to All Cities</a>
+    </article>
+
+</main>
+<footer>
+    <p>MirSikora &copy; 2024</p>
+</footer>
+
+</body>
+</html>

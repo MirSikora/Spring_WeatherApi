@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head lang="cs">
+    <meta charset="UTF-8"/>
+    <title>Weather Api - Spring</title>
+    <link rel="stylesheet" href="/main.css" />
+</head>
+<body>
+<h1>Weather in Cities</h1>
+<main>
+    <a th:each="city:${AllCities}" th:href="'/weather/'+${#strings.toLowerCase(city)}"><img th:src="'/Images/'+ ${#strings.toLowerCase(city)} + '.png'" /></a>
+</main>
+<footer>
+    <p>MirSikora &copy; 2024</p>
+</footer>
+
+</body>
+</html>

@@ -3,6 +3,9 @@ package cz.vsb.project.controller;
 import cz.vsb.project.City;
 import cz.vsb.project.dto.WeatherDto;
 import cz.vsb.project.service.WeatherService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-@RestController
+@Controller
 public class WeatherController {
     private final WeatherService weatherService;
     public WeatherController(WeatherService weatherService) {
@@ -29,9 +32,11 @@ public class WeatherController {
     }
 
     @RequestMapping("/weather/{city}")
-    public WeatherDto getWeatherForCity(@PathVariable ("city") String city) throws URISyntaxException {
+    public String getWeatherForCity(@PathVariable ("city") String city, Model model) throws URISyntaxException {
         City cityEnum = City.valueOf(city.toUpperCase());
-        return weatherService.getWeatherForCity(cityEnum);
+        WeatherDto weatherDto = weatherService.getWeatherForCity(cityEnum);
+        model.addAttribute("About0neCity", weatherDto);
+        return "onecity";
     }
 
 }
