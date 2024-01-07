@@ -1,8 +1,18 @@
 package cz.vsb.project.dto;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 public class WeatherDto {
     private String location;
-    private String timestamp;
+    private ZonedDateTime timestamp;
     private double temp_celsius;
     private double windSpeed_mps;
     private int rel_humadity;
@@ -17,12 +27,14 @@ public class WeatherDto {
         this.location = location;
     }
 
-    public String getTimestamp() {
+    public ZonedDateTime getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
+    public void setTimestamp(String timestamp) throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH);
+        //formatter.parse(timestamp); //Sun Jan 07 09:47:00 CET 2024
+        this.timestamp = ZonedDateTime.ofInstant(formatter.parse(timestamp).toInstant(), ZoneId.systemDefault());
     }
 
     public double getTemp_celsius() {
@@ -38,7 +50,8 @@ public class WeatherDto {
     }
 
     public void setWindSpeed_mps(double windSpeed_mps) {
-        this.windSpeed_mps = windSpeed_mps;
+
+        this.windSpeed_mps = (double) Math.round(windSpeed_mps/3.6 *100)/100;
     }
 
     public int getRel_humadity() {

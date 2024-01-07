@@ -10,27 +10,34 @@
 <main>
     <article>
         <section>
-            <div class="temperature">
-                <div class="temp"><h2 th:text="${About0neCity.getTemp_celsius()}"></h2><span>°C</span></div>
-                <label>Temperature</label>
-            </div>
-            <div class="parameters">
-                <p th:text="'Humadity: ' + ${About0neCity.getRel_humadity()} + '%'"></p>
-                <p th:text="'Wind direction: ' + ${About0neCity.getWind_direction()}"></p>
-                <p th:text="'Wind speed: ' + ${About0neCity.getWindSpeed_mps()} + ' km/h'"></p>
-            </div>
-            <div class="timestamp">
-                <p th:text="${About0neCity.getTimestamp()}"></p>
-                <p th:text="${About0neCity.getWeather_description()}"></p>
-            </div>
+            <p>
+                <span th:text="${About0neCity.getTimestamp().getDayOfWeek()}"></span>
+                <span th:text="${About0neCity.getTimestamp().getDayOfMonth()}+'. '+${About0neCity.getTimestamp().getMonth()}+'. '+${About0neCity.getTimestamp().getYear()}"></span>
+            </p>
+            <p class="actualWeather">
+                <span  th:text="${About0neCity.getWeather_description()}"></span>
+                <span  th:text="${About0neCity.getTemp_celsius()}+'°C'"></span>
+            </p>
+            <p>
+                <span>Humadity: </span>
+                <span  th:text="${About0neCity.getRel_humadity()} + '%'"></span>
+            </p>
+            <p>
+                <span>Wind direction:  </span>
+                <span  th:text="${About0neCity.getWind_direction()}"></span>
+            </p>
+            <p>
+                <span>Wind speed:  </span>
+                <span  th:text="${About0neCity.getWindSpeed_mps()} + ' mps'"></span>
+            </p>
         </section>
-        <img th:src="'/Images/'+ ${#strings.toLowerCase(About0neCity.getLocation())} + '.png'" />
+        <img th:src="'/Images/'+ ${#strings.toLowerCase(About0neCity.getLocation().replace(' ','_'))} + '.png'" />
         <a class="back" href="/">Back to All Cities</a>
     </article>
 
 </main>
 <footer>
-    <p>MirSikora &copy; 2024</p>
+    <p class="footer">MirSikora &copy; 2024</p>
 </footer>
 
 </body>

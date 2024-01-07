@@ -5,34 +5,35 @@ import cz.vsb.project.dto.WeatherDto;
 import cz.vsb.project.service.WeatherService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URISyntaxException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 @Controller
+@RequestMapping("/weather")
 public class WeatherController {
     private final WeatherService weatherService;
     public WeatherController(WeatherService weatherService) {
         this.weatherService = weatherService;
     }
 
-    @RequestMapping("/weather")
-    public Collection<WeatherDto> getWeather() throws URISyntaxException {
+    @RequestMapping("")
+    public String getWeather(Model model) throws Exception {
         List<WeatherDto> weatherDtoList = new ArrayList<>();
         for(City city:City.values()){
             weatherDtoList.add(weatherService.getWeatherForCity(city));
         }
-        return weatherDtoList;
+        model.addAttribute("weatherInCities",weatherDtoList);
+        return "allcities";
+
     }
 
-    @RequestMapping("/weather/{city}")
-    public String getWeatherForCity(@PathVariable ("city") String city, Model model) throws URISyntaxException {
+    @RequestMapping("/{city}")
+    public String getWeatherForCity(@PathVariable ("city") String city, Model model) throws Exception {
         City cityEnum = City.valueOf(city.toUpperCase());
         WeatherDto weatherDto = weatherService.getWeatherForCity(cityEnum);
         model.addAttribute("About0neCity", weatherDto);

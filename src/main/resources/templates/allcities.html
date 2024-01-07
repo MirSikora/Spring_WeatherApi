@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head lang="cs">
+    <meta charset="UTF-8"/>
+    <title>Weather Api - Spring</title>
+    <link rel="stylesheet" href="/main.css" />
+</head>
+<body>
+<h1>Weather in Cities   <a class="show" href="/"><sup>Hide</sup></a></h1>
+<main>
+    <article th:each="city:${weatherInCities}"  class="cityInfo">
+        <a th:href="'/weather/'+${#strings.toLowerCase(city.getLocation().replace(' ','_'))}"><img th:src="'/Images/'+ ${#strings.toLowerCase(city.getLocation().replace(' ','_'))} + '.png'" /></a>
+        <p class="allCitiesInfo">
+            <span th:text="${city.getWeather_description()}"></span>
+            <span th:text="${city.getTemp_celsius()}+'°C'"></span>
+        </p>
+    </article>
+</main>
+<footer>
+    <p class="footer">MirSikora &copy; 2024</p>
+</footer>
+
+</body>
+</html>
