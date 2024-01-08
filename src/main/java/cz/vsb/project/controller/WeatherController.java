@@ -3,23 +3,20 @@ package cz.vsb.project.controller;
 import cz.vsb.project.City;
 import cz.vsb.project.dto.WeatherDto;
 import cz.vsb.project.service.WeatherService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.net.URISyntaxException;
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Controller
 @RequestMapping("/weather")
 public class WeatherController {
-    private final WeatherService weatherService;
-    public WeatherController(WeatherService weatherService) {
-        this.weatherService = weatherService;
-    }
+    @Autowired
+    WeatherService weatherService;
 
     @RequestMapping("")
     public String getWeather(Model model) throws Exception {
